@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="?android:attr/actionBarSize">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Threat Type"
+        android:textColor="#777777"
+        android:textSize="22px"
+        />
+
+    <Spinner
+        android:id="@+id/spinThreatType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <EditText
+        android:id="@+id/edTextDistanceOfThreatFromWaypoint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Distance of Threat From Waypoint"
+        android:inputType="number"/>
+
+    <EditText
+        android:id="@+id/edTexBearingOfThreatFromWaypoint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Bearing or Direction of Threat From Waypoint"
+        android:inputType="number"/>
+
+    <EditText
+        android:id="@+id/edTexThreatNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Note"
+        android:inputType="text"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Response to Threat"
+        android:textColor="#777777"
+        android:textSize="22px"
+        />
+
+    <Spinner
+        android:id="@+id/spinResponseToThreat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_save_observation"
+        android:onClick="displaySaveObsWarningDialog"/>
+
+
+</LinearLayout>

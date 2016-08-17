@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="?android:attr/actionBarSize">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Species Type"
+        android:textColor="#777777"
+        android:textSize="22px"
+        />
+
+    <Spinner
+        android:id="@+id/spinSpeciesType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <EditText
+        android:id="@+id/edTextDiameter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_diameter"
+        android:inputType="number"/>
+
+    <EditText
+        android:id="@+id/edTextNoOfTrees"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_no_of_trees"
+        android:inputType="number"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Observed Through Gathering"
+        android:textColor="#777777"
+        android:textSize="22px"
+        />
+
+    <Spinner
+        android:id="@+id/spinObservedThroughGathering"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <EditText
+        android:id="@+id/edTextOtherTreeSpecies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_other_tree_species"
+        android:inputType="text"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_save_observation"
+        android:onClick="displaySaveObsWarningDialog"/>
+
+</LinearLayout>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="?android:attr/actionBarSize">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnCreateNewObservation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_new_observation"
+            android:onClick="createNewObservation"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btnPausePatrol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pause Patrol"
+            android:onClick="showPausePatrolDialog"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btnEndPatrol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="End Patrol"
+            android:onClick="showEndPatrolDialog"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+
+    <ListView
+        android:id="@+id/lvObservationList"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

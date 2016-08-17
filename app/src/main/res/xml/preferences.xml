@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <PreferenceCategory android:title="Patroller Profile" >
+        <ListPreference
+            android:key="@string/patroller"
+            android:title="Patroller"
+            android:dialogTitle="Patrollers"
+            android:summary="Select the Patroller"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Application Settings" >
+        <EditTextPreference
+            android:title="Web Service Base URL"
+            android:summary="Enter the Web Service Base URL"
+            android:dialogTitle="Web Service Base URL"
+            android:key="@string/ws_base_url"
+            android:defaultValue="@string/defaultBaseUrl"/>
+
+        <EditTextPreference
+            android:title="Location Update Interval (in minutes)"
+            android:summary="Enter the Location Updated Interval"
+            android:dialogTitle="Location Update Interval (in minutes)"
+            android:key="@string/pref_location_udpate_interval"
+            android:defaultValue="1"
+            android:inputType="number"/>
+
+        <EditTextPreference
+            android:title="Settings Password"
+            android:summary="Enter the Settings Password"
+            android:dialogTitle="Settings Password"
+            android:key="@string/pref_settings_password"
+            android:defaultValue="@string/default_settings_password"
+            android:inputType="text"/>
+    </PreferenceCategory>
+
+    <Preference android:title="Synchronize Mobile Data"
+        android:key="@string/syncAppData"
+        android:summary="Synchronize Application Data with the Server"/>
+
+
+
+</PreferenceScreen>

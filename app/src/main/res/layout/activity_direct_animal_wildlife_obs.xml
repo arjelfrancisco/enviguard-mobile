@@ -1,0 +1,80 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="?android:attr/actionBarSize">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Species Type"
+        />
+
+    <Spinner
+        android:id="@+id/spinSpeciesType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <EditText
+        android:id="@+id/edTxtNoMaleAdults"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_no_of_male_adults"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/edTxtNoFemaleAdults"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_no_of_female_adults"
+        android:inputType="number"/>
+
+    <EditText
+        android:id="@+id/edTxtNoYoung"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_no_of_young"
+        android:inputType="number"/>
+
+    <EditText
+        android:id="@+id/edTxtNoUndetermined"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_no_of_undetermined"
+        android:inputType="number"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Action Taken"
+        android:textColor="#777777"
+        android:textSize="22px"
+        />
+
+    <Spinner
+        android:id="@+id/spinActionTaken"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Observed Through Hunting"
+        android:textColor="#777777"
+        android:textSize="22px"
+        />
+
+    <Spinner
+        android:id="@+id/spinObservedThroughHunting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_save_observation"
+        android:onClick="displaySaveObsWarningDialog" />
+
+</LinearLayout>

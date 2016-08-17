@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">CyberTracker</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="btn_new_patrol">Create New Patrol</string>
+    <string name="hint_patrol_name">Please Enter the Patrol Name</string>
+    <string name="btn_create">Create</string>
+    <string name="btn_new_observation">Create New Observation</string>
+    <string name="btn_save_observation">Save Observation</string>
+    <string name="hint_no_of_male_adults">No. of Male Adults</string>
+    <string name="hint_no_of_female_adults">No. of FeMale Adults</string>
+    <string name="hint_no_of_young">No. of Young</string>
+    <string name="hint_no_of_undetermined">No. of Undetermined</string>
+    <string name="hint_diameter">Diameter</string>
+    <string name="hint_no_of_trees">No. of Trees</string>
+    <string name="hint_other_tree_species">Other Tree Species Observed</string>
+    <string name="pref_location_udpate_interval">locationUpdateInterval</string>
+    <string name="pref_settings_password">settingsPassword</string>
+    <string name="default_settings_password">12345678</string>
+    <string name="ws_base_url">wsBareUrl</string>
+    <string name="patroller">patroller</string>
+    <string name="syncAppData">syncAppData</string>
+    <string name="defaultBaseUrl">http://enviguard-capstoneffg.rhcloud.com</string>
+    <string name="defaultPatrollerName">No Name</string>
+    <string name="message_input_required">This field is required.</string>
+    <string name="message_save_observation_warning">Are you sure you want to save this observation ?</string>
+    <string name="dialog_message_sync_data">Please wait while Application Data is synchronzed. \n Web Service URL: %1$s</string>
+    <string name="dialog_message_send_patrol">Please wait while Patrol is sent. \n Web Service URL: %1$s</string>
+</resources>
+

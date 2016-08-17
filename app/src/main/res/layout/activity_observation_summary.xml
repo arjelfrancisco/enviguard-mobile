@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="?android:attr/actionBarSize">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Observation Type"
+            android:layout_gravity="left"/>
+
+        <TextView
+            android:id="@+id/txt_observation_type"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Start Date"
+            android:layout_gravity="left"/>
+
+        <TextView
+            android:id="@+id/txt_start_date"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="End Date"
+            android:layout_gravity="left"/>
+
+        <TextView
+            android:id="@+id/txt_end_date"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"/>
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/layout_forest_condition_details"
+        layout="@layout/details_forest_condition"
+        android:visibility="gone"/>
+
+    <include
+        android:id="@+id/layout_direct_animal_wildlife_details"
+        layout="@layout/details_animal_direct_wildlife"
+        android:visibility="gone"/>
+
+    <include
+        android:id="@+id/layout_direct_flora_wildlife_details"
+        layout="@layout/details_flora_direct_wildlife"
+        android:visibility="gone"/>
+
+    <include
+        android:id="@+id/layout_indirect_wildlife_details"
+        layout="@layout/details_indirect_wildlife"
+        android:visibility="gone"/>
+
+    <include
+        android:id="@+id/layout_threat_details"
+        layout="@layout/details_threat"
+        android:visibility="gone"/>
+
+    <include
+        android:id="@+id/layout_other_obs_details"
+        layout="@layout/details_other_obs"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/txt_label_images"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Images: "
+        android:visibility="gone"/>
+
+    <include
+        layout="@layout/activity_observation_gallery" />
+
+</LinearLayout>
