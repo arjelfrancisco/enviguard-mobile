@@ -59,6 +59,8 @@ public class MainActivity extends BaseActivity {
                                 .setNegativeButton("No", null)
                                 .show();
                         }
+                    case EXIT:
+                        MainActivity.this.finishAffinity();
                     default:
                         Log.d(TAG, "Invalid Option");
                 }

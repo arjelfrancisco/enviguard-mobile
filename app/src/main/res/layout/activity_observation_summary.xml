@@ -74,6 +74,11 @@
         android:visibility="gone"/>
 
     <include
+        android:id="@+id/layout_details_wildlife"
+        layout="@layout/details_wildlife"
+        android:visibility="gone"/>
+
+    <include
         android:id="@+id/layout_direct_animal_wildlife_details"
         layout="@layout/details_animal_direct_wildlife"
         android:visibility="gone"/>

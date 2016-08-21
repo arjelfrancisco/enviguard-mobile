@@ -1,12 +1,12 @@
 package capstone.com.cybertracker.services;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -27,6 +27,7 @@ import capstone.com.cybertracker.enums.SpeciesEnum;
 import capstone.com.cybertracker.models.Patroller;
 import capstone.com.cybertracker.models.SpeciesType;
 import capstone.com.cybertracker.models.ThreatType;
+import capstone.com.cybertracker.models.WebServiceResponseDetails;
 import capstone.com.cybertracker.models.dao.LookupDao;
 import capstone.com.cybertracker.models.dao.PatrollerDao;
 import capstone.com.cybertracker.models.dao.impl.LookupDaoImpl;
@@ -36,7 +37,7 @@ import capstone.com.cybertracker.models.dao.impl.PatrollerDaoImpl;
  * Created by Arjel on 8/4/2016.
  */
 
-public class SyncAppDataTask extends AsyncTask<Void, Void, Boolean> {
+public class SyncAppDataTask extends AsyncTask<Void, Void, WebServiceResponseDetails> {
 
     private static final String TAG = PatrolSenderTask.class.getName();
 
@@ -59,18 +60,19 @@ public class SyncAppDataTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(Void... voids) {
+    protected WebServiceResponseDetails doInBackground(Void... voids) {
+        String errorMessage = "";
         try {
             return sendSyncRequest();
         } catch (IOException e) {
-            e.printStackTrace();
+            errorMessage = "There is an error occured while Syncing Application Data. \nError Message: " + e.getMessage();
         } catch (JSONException e) {
-            e.printStackTrace();
+            errorMessage = "There is an error occured while Syncing Application Data. \nError Message: " + e.getMessage();
         }
-        return false;
+        return new WebServiceResponseDetails(true, errorMessage);
     }
 
-    private Boolean sendSyncRequest() throws IOException, JSONException {
+    private WebServiceResponseDetails sendSyncRequest() throws IOException, JSONException {
         String url = baseUrl + "/actions/syncMobileData";
         HttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost(url);
@@ -85,9 +87,9 @@ public class SyncAppDataTask extends AsyncTask<Void, Void, Boolean> {
 
         if(response.getStatusLine().getStatusCode() == 200) {
             syncAppData(responseString);
-            return true;
+            return new WebServiceResponseDetails(true, "Application Data Synchronization Successful.");
         } else {
-            return false;
+            return new WebServiceResponseDetails(true, "There is an error occurred while Syncing Application Data. \nHTTP Status: " + response.getStatusLine().getStatusCode());
         }
     }
 
@@ -104,15 +106,16 @@ public class SyncAppDataTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     @Override
-    protected void onPostExecute(Boolean result) {
+    protected void onPostExecute(WebServiceResponseDetails result) {
         super.onPostExecute(result);
         Log.d(TAG, "Post-Execute: " + result);
         progress.dismiss();
-        if(result) {
-            Toast.makeText(context, "Application Data Synchronization Successful", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(context, "Application Data Synchronization Failed", Toast.LENGTH_SHORT).show();
-        }
+        new AlertDialog.Builder(context)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setTitle("Message")
+            .setMessage(result.getMessage())
+            .setPositiveButton("Ok", null)
+            .show();
     }
 
     public void syncAppData(String responseString) throws JSONException {

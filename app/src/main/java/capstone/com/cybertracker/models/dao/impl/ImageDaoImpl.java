@@ -106,6 +106,25 @@ public class ImageDaoImpl implements ImageDao {
         return patrolObservationImages;
     }
 
+    @Override
+    public List<PatrolObservationImage> getImagesByObsId(Long observationId) {
+        List<PatrolObservationImage> patrolObservationImages = new ArrayList<>();
+
+        Cursor cursor = database.query(CyberTrackerDBHelper.TABLE_PATROL_OBSERVATION_IMAGE,
+                obsImageCols, CyberTrackerDBHelper.COLUMN_OBSERVATION_ID + "= ?", new String[]{String.valueOf(observationId)},
+                null, null, null);
+
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()) {
+            PatrolObservationImage patrolObservationImage = cursorToImage(cursor);
+            patrolObservationImages.add(patrolObservationImage);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return patrolObservationImages;
+    }
+
     private PatrolObservationImage cursorToImage(Cursor cursor) {
         PatrolObservationImage patrolObservationImage = new PatrolObservationImage();
         patrolObservationImage.setId(cursor.getLong(cursor.getColumnIndex(CyberTrackerDBHelper.COLUMN_ID)));

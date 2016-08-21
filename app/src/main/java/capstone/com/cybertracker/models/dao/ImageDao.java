@@ -13,6 +13,7 @@ public interface ImageDao {
 
     public void addObservationImage(PatrolObservationImage patrolObservationImage);
     public List<PatrolObservationImage> getImagesByObsIdAndObsType(Long observationId, ObservationTypeEnum observationType);
+    public List<PatrolObservationImage> getImagesByObsId(Long observationId);
     public void addTempObservationImage(PatrolObservationImage patrolObservationImage);
     public List<PatrolObservationImage> getTemporaryPatrolObservationImages();
     public void clearTempPatrolObservationImages();

@@ -108,6 +108,9 @@ public class ObservationSummaryActivity extends BaseActivity {
             txtSpecies.setText(wildlifeObservation.getSpecies().getLabel());
             txtSpeciesType.setText(wildlifeObservation.getSpeciesType());
 
+            LinearLayout layoutWildlifeDetails = (LinearLayout) findViewById(R.id.layout_details_wildlife);
+            layoutWildlifeDetails.setVisibility(View.VISIBLE);
+
             if(wildlifeObservation.getWildlifeObservationType() == WildlifeObservationTypeEnum.DIRECT) {
                 if(wildlifeObservation.getSpecies() == SpeciesEnum.FLORA) {
                     FloralDirectWildlifeObservation floralDirectWildlifeObservation = (FloralDirectWildlifeObservation) observation;

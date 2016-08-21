@@ -37,7 +37,7 @@
             android:inputType="text"/>
     </PreferenceCategory>
 
-    <Preference android:title="Synchronize Mobile Data"
+    <Preference android:title="Synchronize Application Data"
         android:key="@string/syncAppData"
         android:summary="Synchronize Application Data with the Server"/>
 

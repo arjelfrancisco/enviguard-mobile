@@ -1,13 +1,14 @@
 package capstone.com.cybertracker.services;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -25,6 +26,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -44,7 +46,10 @@ import capstone.com.cybertracker.models.OtherObservation;
 import capstone.com.cybertracker.models.Patrol;
 import capstone.com.cybertracker.models.PatrolLocation;
 import capstone.com.cybertracker.models.PatrolObservationImage;
+import capstone.com.cybertracker.models.PatrolResponseStatus;
+import capstone.com.cybertracker.models.SendPatrolResponse;
 import capstone.com.cybertracker.models.ThreatObservation;
+import capstone.com.cybertracker.models.WebServiceResponseDetails;
 import capstone.com.cybertracker.models.WildlifeObservation;
 import capstone.com.cybertracker.models.dao.ImageDao;
 import capstone.com.cybertracker.models.dao.LocationDao;
@@ -60,7 +65,7 @@ import capstone.com.cybertracker.utils.CyberTrackerUtilities;
  * Created by Arjel on 7/31/2016.
  */
 
-public class PatrolSenderTask extends AsyncTask<Long, Void, Boolean> {
+public class PatrolSenderTask extends AsyncTask<Long, Void, WebServiceResponseDetails> {
 
     private static final String TAG = PatrolSenderTask.class.getName();
 
@@ -95,31 +100,44 @@ public class PatrolSenderTask extends AsyncTask<Long, Void, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(Long... patrolId) {
+    protected WebServiceResponseDetails doInBackground(Long... patrolId) {
+        String errorMessage = "";
         try {
             this.patrolId = patrolId[0];
-            boolean sendPatrolResult = sendPatrolRequest(patrolId[0]);
+            PatrolResponseStatus patrolResponseStatus = sendPatrolRequest(patrolId[0]);
 
-            if(sendPatrolResult) {
-                // Send Image Request
-                return sendImageRequest(patrolId[0]);
+            if(patrolResponseStatus.getSuccessful()) {
+                List<SendPatrolResponse> sendPatrolResponses = patrolResponseStatus.getSendPatrolResponseList();
+                for(SendPatrolResponse sendPatrolResponse : sendPatrolResponses) {
+                    List<PatrolObservationImage> patrolObservationImages = imageDao.getImagesByObsIdAndObsType(sendPatrolResponse.getObservationId(), sendPatrolResponse.getObservationType());
+                    for(PatrolObservationImage patrolObservationImage : patrolObservationImages) {
+                        WebServiceResponseDetails result = sendImageRequest(sendPatrolResponse.getWebPatrolObsId(), patrolObservationImage);
+                        if(!result.getSuccessful()) {
+                            return result;
+                        }
+                    }
+                }
+                return new WebServiceResponseDetails(true, "Patrol Sent Successfully.");
             } else {
-                return false;
+                return new WebServiceResponseDetails(false, patrolResponseStatus.getMessage());
             }
         } catch (JSONException e) {
             e.printStackTrace();
             Log.e(TAG, "An Error occurred. Error: " + e);
+            errorMessage = "There is an error occured while Sending Patrol. \nError Message: " + e.getMessage();
         } catch (IOException e) {
             e.printStackTrace();
             Log.e(TAG, "An Error occurred. Error: " + e);
+            errorMessage = "There is an error occured while Sending Patrol. \nError Message: " + e.getMessage();
         } catch(RuntimeException e) {
             e.printStackTrace();
             Log.e(TAG, "An Error occurred. Error: " + e);
+            errorMessage = "There is an error occured while Sending Patrol. \nError Message: " + e.getMessage();
         }
-        return false;
+        return new WebServiceResponseDetails(false, errorMessage);
     }
 
-    public Boolean sendPatrolRequest(Long patrolId) throws JSONException, IOException {
+    public PatrolResponseStatus sendPatrolRequest(Long patrolId) throws JSONException, IOException {
         String url = baseUrl + "/actions/patrols";
         HttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost(url);
@@ -139,36 +157,34 @@ public class PatrolSenderTask extends AsyncTask<Long, Void, Boolean> {
         Log.d("****", "Status Code: " + response.getStatusLine().getStatusCode());
 
         if(response.getStatusLine().getStatusCode() == 200) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private Boolean sendImageRequest(Long patrolId) {
-        List<Observation> observations = observationDao.getObservationByPatrolId(patrolId);
-
-        for(Observation observation : observations) {
-            String url = baseUrl + "/actions/observations/" + observation.getId() + "/images";
-
-            List<PatrolObservationImage> patrolObservationImages = imageDao.getImagesByObsIdAndObsType(observation.getId(), observation.getObservationType());
-
-            for(PatrolObservationImage patrolObservationImage : patrolObservationImages) {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("latitude", patrolObservationImage.getLatitude());
-                params.put("longitude", patrolObservationImage.getLongitude());
-                params.put("timestamp", String.valueOf(CyberTrackerUtilities.persistDate(patrolObservationImage.getTimestamp())));
-                Boolean result = multipartRequest(url, params, patrolObservationImage.getImageLocation());
-
-                if(!result) {
-                    return false;
-                }
+            List<SendPatrolResponse> sendPatrolResponses = new ArrayList<>();
+            JSONArray sendPatrolResponseArr = new JSONArray(responseString);
+            for(int i = 0; i < sendPatrolResponseArr.length(); i++) {
+                final JSONObject sendPatrolResponseObj = sendPatrolResponseArr.getJSONObject(i);
+                SendPatrolResponse sendPatrolResponse = new SendPatrolResponse();
+                sendPatrolResponse.setObservationId(sendPatrolResponseObj.getLong("observationId"));
+                sendPatrolResponse.setObservationType(ObservationTypeEnum.valueOf(sendPatrolResponseObj.getString("observationType")));
+                sendPatrolResponse.setWebPatrolObsId(sendPatrolResponseObj.getLong("webPatrolObsId"));
+                sendPatrolResponses.add(sendPatrolResponse);
             }
+
+            return new PatrolResponseStatus(true, "Patrol Sent Successfully.", sendPatrolResponses);
+        } else {
+            return new PatrolResponseStatus(false, "There is an error occured while Sending Patrol. \n HTTP Status: " + response.getStatusLine().getStatusCode(), null);
         }
-        return true;
     }
 
-    public Boolean multipartRequest(String urlTo, Map<String, String> parmas, String filepath)  {
+    private WebServiceResponseDetails sendImageRequest(Long mobilePatrolObsId, PatrolObservationImage patrolObservationImage) {
+        String url = baseUrl + "/actions/observations/" + mobilePatrolObsId + "/images";
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("latitude", patrolObservationImage.getLatitude());
+        params.put("longitude", patrolObservationImage.getLongitude());
+        params.put("timestamp", String.valueOf(CyberTrackerUtilities.persistDate(patrolObservationImage.getTimestamp())));
+        return multipartRequest(url, params, patrolObservationImage.getImageLocation());
+    }
+
+    public WebServiceResponseDetails multipartRequest(String urlTo, Map<String, String> parmas, String filepath)  {
 
         HttpURLConnection connection = null;
         DataOutputStream outputStream = null;
@@ -244,15 +260,15 @@ public class PatrolSenderTask extends AsyncTask<Long, Void, Boolean> {
 
             if (connection.getResponseCode() == 200) {
                 Log.d(TAG, "Successful sending image");
-                return true;
+                return new WebServiceResponseDetails(true, "Successful.");
             } else {
                 Log.e(TAG, "Error sending image with response code: " + connection.getResponseCode());
-                return false;
+                return new WebServiceResponseDetails(false, "There is an error occurred while sending Patrol. \nHTTP Status: " + connection.getResponseCode());
             }
 
         } catch (Exception e) {
             Log.e(TAG, "There is an error occurred. | Error: " + e);
-            return false;
+            return new WebServiceResponseDetails(false, "There is an error occurred while sending Patrol. \nError Message: " + e.getMessage());
         }
     }
 
@@ -286,6 +302,7 @@ public class PatrolSenderTask extends AsyncTask<Long, Void, Boolean> {
         List<Observation> observations = observationDao.getObservationByPatrolId(patrolId);
         for(Observation observation : observations) {
             JSONObject observationObject = new JSONObject();
+            observationObject.put("observationId", observation.getId());
             observationObject.put("observationType", observation.getObservationType().name());
             observationObject.put("startDate", CyberTrackerUtilities.persistDate(observation.getStartDate()));
             observationObject.put("endDate", CyberTrackerUtilities.persistDate(observation.getEndDate()));
@@ -354,17 +371,34 @@ public class PatrolSenderTask extends AsyncTask<Long, Void, Boolean> {
     }
 
     @Override
-    protected void onPostExecute(Boolean result) {
+    protected void onPostExecute(final WebServiceResponseDetails result) {
         super.onPostExecute(result);
         Log.d(TAG, "Post-Execute: " + result);
         progress.dismiss();
-        if(result) {
-            updatePatrolStatus();
-            ((Activity)context).finish();
-            Toast.makeText(context, "Patrol Sent Successfully", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(context, "Patrol Sending Failed", Toast.LENGTH_SHORT).show();
-        }
+
+        new AlertDialog.Builder(context)
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setTitle("Message")
+            .setMessage(result.getMessage())
+            .setPositiveButton("Ok", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                if(result.getSuccessful()) {
+                    updatePatrolStatus();
+                    ((Activity)context).finish();
+                }
+            }})
+            .show();
+
+
+//        if(result) {
+//            updatePatrolStatus();
+//            ((Activity)context).finish();
+//            Toast.makeText(context, "Patrol Sent Successfully", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(context, "Patrol Sending Failed", Toast.LENGTH_SHORT).show();
+//        }
     }
 
     private void updatePatrolStatus() {
