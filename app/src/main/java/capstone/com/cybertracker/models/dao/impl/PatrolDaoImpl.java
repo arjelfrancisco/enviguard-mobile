@@ -78,6 +78,19 @@ public class PatrolDaoImpl implements PatrolDao{
     }
 
     @Override
+    public Patrol getPatrolByName(String name) {
+        Cursor cursor = database.query(CyberTrackerDBHelper.TABLE_PATROLS,
+                allColumns, CyberTrackerDBHelper.COLUMN_PATROL_NAME + "=?", new String[]{name}, null, null, CyberTrackerDBHelper.COLUMN_START_DATE + " DESC");
+
+        if(cursor.moveToFirst())  {
+            return cursorToPatrol(cursor);
+        }
+
+        return null;
+    }
+
+
+    @Override
     public void updatePatrolStatus(Long patrolId, PatrolStatusEnum patrolStatus) {
         ContentValues values = new ContentValues();
         values.put(CyberTrackerDBHelper.COLUMN_PATROL_STATUS, patrolStatus.name());

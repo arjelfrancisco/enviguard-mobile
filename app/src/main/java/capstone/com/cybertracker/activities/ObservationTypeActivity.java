@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.nhaarman.supertooltips.ToolTipView;
 
 import capstone.com.cybertracker.R;
 import capstone.com.cybertracker.enums.ObservationTypeEnum;
@@ -21,6 +24,7 @@ public class ObservationTypeActivity extends BaseActivity {
     private static final String TAG = ObservationTypeActivity.class.getName();
 
     private Long patrolId;
+    private ToolTipView toolTipView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,8 @@ public class ObservationTypeActivity extends BaseActivity {
         ListView lvObservationTypeList = (ListView) findViewById(R.id.lvObservationTypeList);
         lvObservationTypeList.setAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_1, ObservationTypeEnum.values()));
         lvObservationTypeList.setOnItemClickListener(openObservationTypeClickHandler);
+        lvObservationTypeList.setOnItemLongClickListener(itemLongClickListener);
+        lvObservationTypeList.setLongClickable(true);
     }
 
     private AdapterView.OnItemClickListener openObservationTypeClickHandler = new AdapterView.OnItemClickListener() {
@@ -67,6 +73,31 @@ public class ObservationTypeActivity extends BaseActivity {
             default:
                 Log.d(TAG, "Invalid Option");
         }
+        }
+    };
+
+    private AdapterView.OnItemLongClickListener itemLongClickListener = new AdapterView.OnItemLongClickListener() {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            ObservationTypeEnum selectedMenu = (ObservationTypeEnum) parent.getItemAtPosition(position);
+            switch (selectedMenu) {
+                case FOREST_CONDITION:
+                    Toast.makeText(getApplicationContext(), "Forest Condition is the current status and/or trends/development in the forest.", Toast.LENGTH_LONG).show();
+                    break;
+                case WILDLIFE:
+                    Toast.makeText(getApplicationContext(), "Wildlife traditionally refers to undomesticated animal species, but has come to include all plants, fungi, and other organisms that grow or live wild in an area without being introduced by humans./forests.", Toast.LENGTH_LONG).show();
+                    break;
+                case THREATS:
+                    Toast.makeText(getApplicationContext(), "Threats are things that inflict harm or damage to forests", Toast.LENGTH_LONG).show();
+                    break;
+                case OTHER_OBSERVATIONS:
+                    Toast.makeText(getApplicationContext(), "Other Observations", Toast.LENGTH_LONG).show();
+                    break;
+                default:
+                    Log.d(TAG, "Invalid Option");
+            }
+
+            return true;
         }
     };
 

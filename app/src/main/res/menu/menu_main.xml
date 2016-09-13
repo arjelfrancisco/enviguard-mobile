@@ -4,18 +4,14 @@
     tools:context="capstone.com.cybertrackertest.MainActivity">
     <item
         android:id="@+id/menu_settings"
-        android:orderInCategory="1"
+        android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/menu_settings"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/menu_gallery"
-        android:orderInCategory="2"
-        android:title="@string/menu_gallery"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_browse_db"
-        android:orderInCategory="3"
+        android:orderInCategory="1"
         android:title="Browse Database"
-        app:showAsAction="never" />
+        app:showAsAction="never"
+        android:visible="false"/>
 </menu>

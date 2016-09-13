@@ -7,13 +7,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.List;
 
 import capstone.com.cybertracker.R;
 import capstone.com.cybertracker.adapters.ObservationListAdapter;
+import capstone.com.cybertracker.enums.PatrolStatusEnum;
 import capstone.com.cybertracker.models.Observation;
 import capstone.com.cybertracker.models.dao.ImageDao;
 import capstone.com.cybertracker.models.dao.ObservationDao;
@@ -33,6 +36,7 @@ public class PatrolSummaryActivity extends BaseActivity {
     private Long patrolId;
     private ObservationDao observationDao;
     private ImageDao imageDao;
+    private PatrolStatusEnum patrolStatus;
 
     private List<Observation> observations;
 
@@ -45,12 +49,23 @@ public class PatrolSummaryActivity extends BaseActivity {
         setContentView(R.layout.activity_patrol_summary);
 
         this.patrolId = getIntent().getLongExtra(ExtraConstants.PATROL_ID, -1l);
+        String patrolName = getIntent().getStringExtra(ExtraConstants.PATROL_NAME);
+        this.patrolStatus = PatrolStatusEnum.valueOf(getIntent().getStringExtra(ExtraConstants.PATROL_STATUS));
         this.observationDao = new ObservationDaoImpl(this);
         this.imageDao = new ImageDaoImpl(this);
 
         this.observations = observationDao.getObservationByPatrolId(patrolId);
 
         this.pbSenderTask = (ProgressBar) findViewById(R.id.pbPatrolSenderTask);
+
+        Button buttonSendPatrol = (Button) findViewById(R.id.btnSendPatrol);
+        if(patrolStatus == PatrolStatusEnum.FINISHED) {
+            buttonSendPatrol.setVisibility(View.VISIBLE);
+        }
+
+        TextView txtPatrolName = (TextView) findViewById(R.id.txtPatrolname);
+        txtPatrolName.setText(patrolName);
+
         initializeObservationListView();
     }
 

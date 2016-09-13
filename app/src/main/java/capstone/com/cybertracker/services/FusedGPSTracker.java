@@ -159,6 +159,8 @@ public class FusedGPSTracker implements
         String region = "";
 
         try {
+            latitude = 13.268245;
+            longitude = 123.718090;
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
             region = addresses.get(0).getAdminArea();
             Log.d(TAG, "********Address: " + addresses.get(0));

@@ -6,7 +6,7 @@ package capstone.com.cybertracker.enums;
 
 public enum HomeMenuEnum {
 
-    START_CYBERTRACKER("Start Cyber Tracker"),
+    START_CYBERTRACKER("Start Enviguard"),
     EXIT("Exit");
 
     HomeMenuEnum(String label) {

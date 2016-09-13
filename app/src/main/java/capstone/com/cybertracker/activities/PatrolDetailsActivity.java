@@ -72,6 +72,11 @@ public class PatrolDetailsActivity extends BaseActivity  {
             edTxtPatrolName.setError(getString(R.string.message_input_required));
             valid = false;
         }
+
+        if(patrolDao.getPatrolByName(edTxtPatrolName.getText().toString()) != null) {
+            edTxtPatrolName.setError(getString(R.string.message_patrol_already_exist));
+            valid = false;
+        }
         return valid;
     }
 

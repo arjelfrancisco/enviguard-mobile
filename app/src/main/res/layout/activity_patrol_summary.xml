@@ -4,18 +4,41 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="?android:attr/actionBarSize">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal" android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txtPatrolname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:textSize="30sp"/>
+
+    </LinearLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Observations: "
+            android:paddingTop="10dp"
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/btnSendPatrol"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Send Patrol"
-            android:onClick="showSendPatrolDialog"/>
+            android:layout_alignParentRight="true"
+            android:drawableLeft="@android:drawable/ic_menu_send"
+            android:onClick="showSendPatrolDialog"
+            android:visibility="gone"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <ProgressBar
         android:id="@+id/pbPatrolSenderTask"

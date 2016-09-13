@@ -17,58 +17,58 @@
         </activity>
 
         <activity android:name=".activities.PatrolListActivity"
-            android:label="Patrols" />
+            android:label="@string/app_name" />
 
         <activity android:name=".activities.PatrolDetailsActivity"
-            android:label="Patrol Details" />
+            android:label="@string/app_name" />
 
         <activity android:name=".activities.AndroidDatabaseManager"
-            android:label="Android Database Manager" />
+            android:label="@string/app_name" />
 
         <activity android:name=".activities.ObservationListActivity"
-            android:label="Observations" />
+            android:label="@string/app_name" />
 
         <activity android:name=".activities.ObservationTypeActivity"
-            android:label="Observation Types" />
+            android:label="@string/app_name" />
 
         <activity android:name=".activities.ForestConditionObservationActivity"
-            android:label="Forest Condition Observation" />
+            android:label="@string/app_name" />
 
         <activity android:name=".activities.WildlifeObservationActivity"
-            android:label="Wildlife Observation" />
+            android:label="@string/app_name" />
 
         <activity android:name=".activities.DirectObservationActivity"
-            android:label="Direct Observation" />
+            android:label="@string/app_name" />
 
         <activity android:name=".activities.IndirectObservationActivity"
-            android:label="Indirect Observation" />
+            android:label="@string/app_name" />
 
         <activity android:name=".activities.DirectAnimalWildlifeObservationActivity"
-            android:label="Direct Wildlife Observation" />
+            android:label="@string/app_name" />
 
         <activity android:name=".activities.DirectFloraWildlifeObservationActivity"
-            android:label="Direct Flora Observation" />
+            android:label="@string/app_name" />
 
         <activity android:name=".activities.ThreatObservationActivity"
-            android:label="Threat Observation" />
+            android:label="@string/app_name" />
 
         <activity android:name=".activities.OtherObservationActivity"
-            android:label="Other Observation" />
+            android:label="@string/app_name" />
 
         <activity android:name=".activities.IndirectWildlifeObservationActivity"
-            android:label="Indirect Wildlife Observation" />
+            android:label="@string/app_name" />
 
         <activity android:name=".activities.ObservationGalleryActivity"
-            android:label="Observation Gallery" />
+            android:label="@string/app_name" />
 
         <activity android:name=".activities.PatrolSummaryActivity"
-            android:label="Patrol Summary" />
+            android:label="@string/app_name" />
 
         <activity android:name=".activities.SettingsActivity"
-            android:label="Settings" />
+            android:label="@string/app_name" />
 
         <activity android:name=".activities.ObservationSummaryActivity"
-            android:label="Observation Summary" />
+            android:label="@string/app_name" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

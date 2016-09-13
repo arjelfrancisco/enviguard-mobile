@@ -1,20 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="?android:attr/actionBarSize">
 
-    <Button
-        android:id="@+id/btnCreateNewPatrol"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_new_patrol"
-        android:onClick="createNewPatrol"/>
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Patrols: "
+            android:paddingTop="10dp"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/btnCreateNewPatrol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:drawableLeft="@android:drawable/ic_input_add"
+            android:text="@string/btn_new_patrol"
+            android:onClick="createNewPatrol"/>
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/lvPatrolList"
         android:clickable="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

@@ -12,4 +12,6 @@ public class ExtraConstants {
     public static final String NEW_PATROL = "new_patrol";
     public static final String OBSERVATION_TYPE = "observation_type";
     public static final String OBSERVATION_ID = "observation_id";
+    public static final String PATROL_STATUS = "patrol_status";
+    public static final String PATROL_NAME = "patrol_name";
 }

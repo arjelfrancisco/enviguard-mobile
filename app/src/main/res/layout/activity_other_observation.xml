@@ -4,17 +4,44 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="?android:attr/actionBarSize">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Other Observation"
+        android:textSize="30sp"
+        android:paddingBottom="25dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Note"
+        android:textColor="#372c24"
+        />
+
     <EditText
         android:id="@+id/edTextOtherNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Note"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:lines="10"
+        android:minLines="5"
+        android:gravity="top|left"
+        android:maxLines="15"
+        android:paddingBottom="15dp"
+        android:paddingLeft="15dp"/>
 
-    <Button
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_save_observation"
-        android:onClick="displaySaveObsWarningDialog"/>
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_save_observation"
+            android:drawableLeft="@android:drawable/ic_menu_save"
+            android:onClick="displaySaveObsWarningDialog"
+            android:layout_alignParentLeft="true" />
+
+    </RelativeLayout>
 
 </LinearLayout>

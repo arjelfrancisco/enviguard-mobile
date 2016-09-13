@@ -62,7 +62,7 @@ public class WildlifeObservationActivity extends BaseActivity {
                 case INDIRECT:
                     Intent indirectIntent = new Intent(getApplicationContext(), IndirectObservationActivity.class);
                     indirectIntent.putExtra(ExtraConstants.PATROL_ID, patrolId);
-                    indirectIntent.putExtra(ExtraConstants.START_DATE, startDate);
+                    indirectIntent.putExtra(ExtraConstants.START_DATE, CyberTrackerUtilities.persistDate(startDate));
                     startActivity(indirectIntent);
                     break;
 

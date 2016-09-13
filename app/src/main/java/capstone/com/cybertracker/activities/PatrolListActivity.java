@@ -56,13 +56,16 @@ public class PatrolListActivity extends BaseActivity  {
 
         PatrolStatusEnum patrolStatus = patrol.getStatus();
 
-        if(patrolStatus == PatrolStatusEnum.FINISHED) {
+        if(patrolStatus == PatrolStatusEnum.FINISHED || patrolStatus == PatrolStatusEnum.SENT) {
             Intent intent = new Intent(getApplicationContext(), PatrolSummaryActivity.class);
             intent.putExtra(ExtraConstants.PATROL_ID, patrol.getId());
+            intent.putExtra(ExtraConstants.PATROL_STATUS, patrolStatus.name());
+            intent.putExtra(ExtraConstants.PATROL_NAME, patrol.getName());
             startActivity(intent);
         } else if(patrolStatus == PatrolStatusEnum.ONGOING || patrolStatus == PatrolStatusEnum.ONHOLD) {
             Intent intent = new Intent(getApplicationContext(), ObservationListActivity.class);
             intent.putExtra(ExtraConstants.PATROL_ID, patrol.getId());
+            intent.putExtra(ExtraConstants.PATROL_NAME, patrol.getName());
             startActivity(intent);
         }
         }

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import capstone.com.cybertracker.R;
 import capstone.com.cybertracker.adapters.ObservationListAdapter;
@@ -41,7 +42,7 @@ public class ObservationListActivity extends BaseActivity {
 
         this.observationDao = new ObservationDaoImpl(this);
         this.patrolDao = new PatrolDaoImpl(this);
-
+        String patrolName = getIntent().getStringExtra(ExtraConstants.PATROL_NAME);
         this.patrolId = getIntent().getLongExtra(ExtraConstants.PATROL_ID, -1l);
         String isNew = getIntent().getStringExtra(ExtraConstants.NEW_PATROL);
         if(isNew != null) {
@@ -49,6 +50,9 @@ public class ObservationListActivity extends BaseActivity {
         }
 
         gpsTracker = FusedGPSTracker.getInstance(this);
+
+        TextView txtPatrolName = (TextView) findViewById(R.id.txtPatrolname);
+        txtPatrolName.setText(patrolName);
 
         initializeObservationListView();
         startPatrolTracking();

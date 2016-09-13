@@ -166,7 +166,7 @@ public class BaseActivity extends AppCompatActivity {
                             startActivity(intent);
                             alertDialog.dismiss();
                         } else {
-                            input.setError("Invalid Password. " + sharedPrefpassword);
+                            input.setError("Invalid Password. ");
                         }
                     }
                 });

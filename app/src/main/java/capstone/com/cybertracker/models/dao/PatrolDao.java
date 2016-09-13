@@ -14,6 +14,7 @@ public interface PatrolDao {
     public Long addPatrol(Patrol patrol);
     public List<Patrol> getPatrols();
     public Patrol getPatrolById(Long patrolId);
+    public Patrol getPatrolByName(String name);
     public void updatePatrolStatus(Long patrolId, PatrolStatusEnum patrolStatus);
     public void endPatrol(Long patrolId);
 

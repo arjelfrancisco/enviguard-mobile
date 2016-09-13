@@ -4,61 +4,101 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="?android:attr/actionBarSize">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Threat Observation"
+        android:textSize="30sp"
+        android:paddingBottom="25dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Threat Type"
-        android:textColor="#777777"
-        android:textSize="22px"
+        android:textColor="#372c24"
         />
 
     <Spinner
         android:id="@+id/spinThreatType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="15dp"
+        android:paddingLeft="15dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Distance of Threat From Waypoint (in meters)"
+        android:textColor="#372c24"
         />
 
     <EditText
         android:id="@+id/edTextDistanceOfThreatFromWaypoint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Distance of Threat From Waypoint"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:paddingBottom="15dp"
+        android:paddingLeft="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bearing or Direction of Threat From Waypoint (in meters)"
+        android:textColor="#372c24"
+        />
 
     <EditText
         android:id="@+id/edTexBearingOfThreatFromWaypoint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Bearing or Direction of Threat From Waypoint"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:paddingBottom="15dp"
+        android:paddingLeft="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Note"
+        android:textColor="#372c24"
+        />
 
     <EditText
         android:id="@+id/edTexThreatNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Note"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:paddingBottom="15dp"
+        android:paddingLeft="15dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Response to Threat"
-        android:textColor="#777777"
-        android:textSize="22px"
+        android:textColor="#372c24"
         />
 
     <Spinner
         android:id="@+id/spinResponseToThreat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="15dp"
+        android:paddingLeft="15dp"
         />
 
-    <Button
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_save_observation"
-        android:onClick="displaySaveObsWarningDialog"/>
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_save_observation"
+            android:drawableLeft="@android:drawable/ic_menu_save"
+            android:onClick="displaySaveObsWarningDialog"
+            android:layout_alignParentLeft="true" />
+
+    </RelativeLayout>
 
 
 </LinearLayout>

@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="?android:attr/actionBarSize">
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="?android:attr/actionBarSize">
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Observation Summary"
+        android:textSize="30sp"
+        android:paddingBottom="25dp"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingBottom="10dp"
         android:orientation="horizontal" >
 
         <TextView
@@ -29,6 +43,8 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingBottom="10dp"
         android:orientation="horizontal" >
 
         <TextView
@@ -50,6 +66,8 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingBottom="10dp"
         android:orientation="horizontal" >
 
         <TextView
@@ -108,9 +126,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Images: "
+        android:paddingLeft="15dp"
         android:visibility="gone"/>
 
     <include
-        layout="@layout/activity_observation_gallery" />
+        layout="@layout/activity_observation_gallery"
+        android:paddingLeft="15dp"/>
 
 </LinearLayout>
+
+</ScrollView>
