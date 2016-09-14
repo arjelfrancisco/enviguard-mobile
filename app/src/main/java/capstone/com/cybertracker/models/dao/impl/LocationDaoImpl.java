@@ -9,6 +9,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import capstone.com.cybertracker.models.DetailedLocation;
 import capstone.com.cybertracker.models.PatrolLocation;
 import capstone.com.cybertracker.models.dao.LocationDao;
 import capstone.com.cybertracker.utils.CyberTrackerDBHelper;
@@ -26,7 +27,8 @@ public class LocationDaoImpl implements LocationDao {
     private CyberTrackerDBHelper helper;
 
     private String[] allColumns = {CyberTrackerDBHelper.COLUMN_ID, CyberTrackerDBHelper.COLUMN_PATROL_ID, CyberTrackerDBHelper.COLUMN_LONGITUDE,
-            CyberTrackerDBHelper.COLUMN_LATITUDE, CyberTrackerDBHelper.COLUMN_TIMESTAMP, CyberTrackerDBHelper.COLUMN_REGION};
+            CyberTrackerDBHelper.COLUMN_LATITUDE, CyberTrackerDBHelper.COLUMN_TIMESTAMP, CyberTrackerDBHelper.COLUMN_REGION,
+            CyberTrackerDBHelper.COLUMN_CITY, CyberTrackerDBHelper.COLUMN_STREET};
 
     public LocationDaoImpl(Context context) {
         this.helper = CyberTrackerDBHelper.getInstance(context);
@@ -40,7 +42,9 @@ public class LocationDaoImpl implements LocationDao {
         values.put(CyberTrackerDBHelper.COLUMN_LONGITUDE, patrolLocation.getLongitude());
         values.put(CyberTrackerDBHelper.COLUMN_LATITUDE, patrolLocation.getLatitude());
         values.put(CyberTrackerDBHelper.COLUMN_TIMESTAMP, CyberTrackerUtilities.persistDate(patrolLocation.getTimestamp()));
-        values.put(CyberTrackerDBHelper.COLUMN_REGION, patrolLocation.getRegion());
+        values.put(CyberTrackerDBHelper.COLUMN_REGION, patrolLocation.getDetailedLocation().getRegion());
+        values.put(CyberTrackerDBHelper.COLUMN_CITY, patrolLocation.getDetailedLocation().getCity());
+        values.put(CyberTrackerDBHelper.COLUMN_STREET, patrolLocation.getDetailedLocation().getStreet());
 
         long insertId = database.insert(CyberTrackerDBHelper.TABLE_PATROL_LOCATIONS, null, values);
         Log.d(TAG, "Location ID: " + insertId);
@@ -71,7 +75,11 @@ public class LocationDaoImpl implements LocationDao {
         patrolLocation.setPatrolId(cursor.getLong(cursor.getColumnIndex(CyberTrackerDBHelper.COLUMN_PATROL_ID)));
         patrolLocation.setLongitude(cursor.getString(cursor.getColumnIndex(CyberTrackerDBHelper.COLUMN_LONGITUDE)));
         patrolLocation.setLatitude(cursor.getString(cursor.getColumnIndex(CyberTrackerDBHelper.COLUMN_LATITUDE)));
-        patrolLocation.setRegion(cursor.getString(cursor.getColumnIndex(CyberTrackerDBHelper.COLUMN_REGION)));
+        DetailedLocation detailedLocation = new DetailedLocation();
+        detailedLocation.setRegion(cursor.getString(cursor.getColumnIndex(CyberTrackerDBHelper.COLUMN_REGION)));
+        detailedLocation.setStreet(cursor.getString(cursor.getColumnIndex(CyberTrackerDBHelper.COLUMN_STREET)));
+        detailedLocation.setCity(cursor.getString(cursor.getColumnIndex(CyberTrackerDBHelper.COLUMN_CITY)));
+        patrolLocation.setDetailedLocation(detailedLocation);
         patrolLocation.setTimestamp(CyberTrackerUtilities.retrieveDate(cursor.getLong(cursor.getColumnIndex(CyberTrackerDBHelper.COLUMN_TIMESTAMP))));
 
         return patrolLocation;

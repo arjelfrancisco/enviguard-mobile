@@ -12,7 +12,7 @@ public class PatrolLocation {
     private Long patrolId;
     private String longitude;
     private String latitude;
-    private String region;
+    private DetailedLocation detailedLocation;
     private Date timestamp;
 
     public Long getId() {
@@ -47,12 +47,12 @@ public class PatrolLocation {
         this.latitude = latitude;
     }
 
-    public String getRegion() {
-        return region;
+    public DetailedLocation getDetailedLocation() {
+        return detailedLocation;
     }
 
-    public void setRegion(String region) {
-        this.region = region;
+    public void setDetailedLocation(DetailedLocation detailedLocation) {
+        this.detailedLocation = detailedLocation;
     }
 
     public Date getTimestamp() {

@@ -38,6 +38,7 @@ import capstone.com.cybertracker.enums.PatrolStatusEnum;
 import capstone.com.cybertracker.enums.SpeciesEnum;
 import capstone.com.cybertracker.enums.WildlifeObservationTypeEnum;
 import capstone.com.cybertracker.models.AnimalDirectWildlifeObservation;
+import capstone.com.cybertracker.models.DetailedLocation;
 import capstone.com.cybertracker.models.FloralDirectWildlifeObservation;
 import capstone.com.cybertracker.models.ForestConditionObservation;
 import capstone.com.cybertracker.models.IndirectWildlifeObservation;
@@ -288,12 +289,15 @@ public class PatrolSenderTask extends AsyncTask<Long, Void, WebServiceResponseDe
             locationObject.put("longitude", location.getLongitude());
             locationObject.put("latitude", location.getLatitude());
             locationObject.put("timestamp", CyberTrackerUtilities.persistDate(location.getTimestamp()));
+            DetailedLocation detailedLocation = location.getDetailedLocation();
             // Update Region
-            if(location.getRegion() == null || location.getRegion().isEmpty()) {
-                String region = gpsTracker.getLocationRegion(Double.valueOf(location.getLatitude()), Double.valueOf(location.getLongitude()));
-                location.setRegion(region);
+            if(detailedLocation.getRegion() == null || detailedLocation.getRegion().isEmpty()) {
+                DetailedLocation newDetailedLocation = gpsTracker.getDetailedLocation(Double.valueOf(location.getLatitude()), Double.valueOf(location.getLongitude()));
+                location.setDetailedLocation(newDetailedLocation);
             }
-            locationObject.put("region", location.getRegion());
+            locationObject.put("region", detailedLocation.getRegion());
+            locationObject.put("city", detailedLocation.getCity());
+            locationObject.put("street", detailedLocation.getStreet());
             locationArray.put(locationObject);
         }
         requestObject.put("locations", locationArray);

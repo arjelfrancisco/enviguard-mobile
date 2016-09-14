@@ -20,7 +20,7 @@ public class CyberTrackerDBHelper extends SQLiteOpenHelper {
 
     private static CyberTrackerDBHelper instance;
 
-    public static final int DATABASE_VERSION = 12;
+    public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "CyberTrackerDB.db";
 
     private static final String TEXT_TYPE = " TEXT";
@@ -89,6 +89,8 @@ public class CyberTrackerDBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_LATITUDE = "latitude";
     public static final String COLUMN_TIMESTAMP = "timestamp";
     public static final String COLUMN_REGION = "region";
+    public static final String COLUMN_CITY = "city";
+    public static final String COLUMN_STREET = "street";
 
     public static final String TABLE_PATROL_OBSERVATION_IMAGE = "patrol_observation_image";
     public static final String COLUMN_IMAGE_LOCATION = "image_location";
@@ -175,6 +177,8 @@ public class CyberTrackerDBHelper extends SQLiteOpenHelper {
                     COLUMN_LONGITUDE + TEXT_TYPE + COMMA_SEP +
                     COLUMN_LATITUDE + TEXT_TYPE + COMMA_SEP +
                     COLUMN_REGION + TEXT_TYPE + COMMA_SEP +
+                    COLUMN_CITY + TEXT_TYPE + COMMA_SEP +
+                    COLUMN_STREET + TEXT_TYPE + COMMA_SEP +
                     COLUMN_TIMESTAMP + INTEGER_TYPE + CLOSE_PAR;
 
     private static final String SQL_CREATE_TABLE_PATROL_OBSERVATION_IMAGE =

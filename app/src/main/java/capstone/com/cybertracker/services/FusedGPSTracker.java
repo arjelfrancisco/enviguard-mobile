@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Locale;
 
 import capstone.com.cybertracker.R;
+import capstone.com.cybertracker.models.DetailedLocation;
 import capstone.com.cybertracker.models.PatrolLocation;
 import capstone.com.cybertracker.models.dao.LocationDao;
 import capstone.com.cybertracker.models.dao.impl.LocationDaoImpl;
@@ -149,27 +150,29 @@ public class FusedGPSTracker implements
         patrolLocation.setLatitude(String.valueOf(location.getLatitude()));
         patrolLocation.setPatrolId(patrolId);
         patrolLocation.setTimestamp(new Date());
-        patrolLocation.setRegion(getLocationRegion(location.getLatitude(), location.getLongitude()));
+        DetailedLocation detailedLocation = getDetailedLocation(location.getLatitude(), location.getLongitude());
+        patrolLocation.setDetailedLocation(detailedLocation);
 
         locationDao.addLocation(patrolLocation);
         Log.d(TAG, "Location is saved.");
     }
 
-    public String getLocationRegion(double latitude, double longitude) {
-        String region = "";
-
+    public DetailedLocation getDetailedLocation(double latitude, double longitude) {
+        DetailedLocation detailedLocation = new DetailedLocation();
         try {
-            latitude = 13.268245;
-            longitude = 123.718090;
+            latitude = 14.562284;
+            longitude = 121.021637;
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
-            region = addresses.get(0).getAdminArea();
+            detailedLocation.setRegion(addresses.get(0).getAdminArea());
+            detailedLocation.setCity(addresses.get(0).getLocality());
+            detailedLocation.setStreet(addresses.get(0).getAddressLine(0));
             Log.d(TAG, "********Address: " + addresses.get(0));
+            Log.d(TAG, "********Detailed Location: " + detailedLocation);
         } catch (IOException e) {
             Log.e(TAG, "Error: " + e);
         }
 
-        Log.d(TAG, "Region: " + region);
-        return region;
+        return detailedLocation;
     }
 
     private void initializeAPIClient() {
